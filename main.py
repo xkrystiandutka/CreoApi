@@ -1,5 +1,3 @@
-from logging import PlaceHolder
-
 import creopyson
 
 c = creopyson.Client()
