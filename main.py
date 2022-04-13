@@ -24,14 +24,14 @@ def basicParameters():
 
 
 def userParameters():
-    H = float(input("Modify height model: "))
-    W = float(input("Modify width model: "))
-    D = float(input("Modify depth: "))
-    T_H = float(input("Modify height text: "))
-    T_D = float(input("Modify depth text: "))
-    T_L = float(input("Modify left position text: ")) 
-    Center = (float(H)-float(H))/2
-    return H, W, D, T_H, T_D, T_L, Center
+        H = float(input("Modify height model: "))
+        W = float(input("Modify width model: "))
+        D = float(input("Modify depth: "))
+        T_H = float(input("Modify height text: "))
+        T_D = float(input("Modify depth text: "))
+        T_L = float(input("Modify left position text: ")) 
+        Center = (float(H)-float(H))/2
+        return H, W, D, T_H, T_D, T_L, Center
 
 def creoDimension(Parameters):
     c.dimension_set('d3', float(Parameters[0]))
@@ -49,8 +49,10 @@ os.system('cls')
 
 def dimensionSet():
     userInput = input("Do you want to modify paramaters (y/n)? ")
+    userInput
     if userInput == 'y':
         creoDimension(userParameters())
+        print('Succesfully updated the models parameters')
     elif userInput == 'n':
         print('Create Model with starts paramaters')
         creoDimension(basicParameters())
@@ -60,3 +62,25 @@ def dimensionSet():
 
 dimensionSet()
 
+def chooseMaterial():
+    os.system('cls')
+    materials = c.file_list_materials()
+    counter = 0
+    for x in materials:
+        print(str(counter) + " - " + x)
+        counter = counter+1
+
+    material = int(input("Select material(number): "))
+
+    c.file_set_cur_material(str(materials[material]))
+
+
+chooseMaterial()
+
+
+def changeText():
+    text = str(input("Write text: "))
+    c.parameter_set("TEXT", text)
+    c.file_regenerate()
+
+changeText()
