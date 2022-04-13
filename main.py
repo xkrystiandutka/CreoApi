@@ -66,7 +66,6 @@ def dimensionSet():
         dimensionSet()
 
 def chooseMaterial():
-    os.system('cls')
     materials = c.file_list_materials()
     counter = 0
     for x in materials:
@@ -74,10 +73,14 @@ def chooseMaterial():
         counter = counter+1
 
     material = int(input("Select material(number): "))
-
-    c.file_set_cur_material(str(materials[material]))
-    os.system('cls')
-    userChoose()
+    if material > 0 and material < 11: 
+        c.file_set_cur_material(str(materials[material]))
+        os.system('cls')
+        userChoose()
+    else:
+        os.system('cls')
+        print("Enter a number between 1 and 10")
+        chooseMaterial()
 
 def changeText():
     os.system('cls')
