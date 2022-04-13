@@ -1,4 +1,3 @@
-from mimetypes import init
 import creopyson
 import os
 
@@ -54,13 +53,14 @@ def creoDimension(Parameters):
 def dimensionSet():
     os.system('cls')
     userInput = input("Do you want to modify paramaters (y/n)? ")
-    userInput
     if userInput == 'y':
         creoDimension(userParameters())
         print('Succesfully updated the models parameters')
+        userChoose()
     elif userInput == 'n':
         print('Create Model with starts paramaters')
         creoDimension(basicParameters())
+        userChoose()
     else:
         print('Error: Wrong input, Use y or n! Try again')
         dimensionSet()
@@ -76,12 +76,30 @@ def chooseMaterial():
     material = int(input("Select material(number): "))
 
     c.file_set_cur_material(str(materials[material]))
+    os.system('cls')
+    userChoose()
 
 def changeText():
     os.system('cls')
     text = str(input("Write text: "))
     c.parameter_set("TEXT", text)
     c.file_regenerate()
+    userChoose()
+
+def setCreoWorkingPath():
+    os.system('cls')
+    userInput = input("Do you want to modify working directory (y/n)? ")
+    if userInput == 'n':
+        worikngPath = 'D:/API/'
+        print("he path of the working directory remains the same!")
+        userChoose()
+    elif userInput == 'y':
+        newWorkingPath = input('Set new working path for creo:')
+        c.creo_cd(newWorkingPath)        
+        userChoose()
+    else:
+        print('Error: Wrong input, Use y or n! Try again')
+        setCreoWorkingPath()
 
 def authorApi():
     print ("""
@@ -102,20 +120,33 @@ def authorApi():
 )
 
 def userChoose():
+    authorApi()
     print("[1] - Set working path")
     print("[2] - Modify model paramaters & Modify text paramaters")
     print("[3] - Modify text")
     print("[4] - Change the models material")
     print("[q] - Quit / exit the program")
-    return input("\nWhat would you like to do? ")
+    task = input("\nWhat would you like to do? ")
+    if task == '1':
+        print("Set working path")
+        setCreoWorkingPath()
+    elif task == '2':
+        print("Modify model paramaters & Modify text paramaters")
+        dimensionSet()
+    elif task == '3':
+        print("Modify text")
+        changeText()
+    elif task == '4':
+        print("Change the models material")
+        chooseMaterial()
+    elif task == 'q':
+        exit()
+    else:
+        print("Error: Wrong input! Try again")
 
 def initCreoApi():
-    authorApi()
-    userChoose()
-    dimensionSet()
-    chooseMaterial()
-    changeText()
-    
+   userChoose()
+  
 #Start programme CREOAPI
 
 initCreoApi()
