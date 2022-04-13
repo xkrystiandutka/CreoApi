@@ -1,5 +1,5 @@
-#import creopysonApi
 import creopyson
+import os
 
 c = creopyson.Client()
 c.connect()
@@ -8,42 +8,60 @@ c.creo_cd("D:\API")
 c.file_open("kr_du_13k1.prt")
 c.view_activate("FRONT")
 
-while True:
-    try:
-        h = float(input("Podaj h"))
-        w = float(input("Podaj w"))
-        l = float(input("Podaj l"))
-        t_h = float(input("Podaj t_h"))
-        t_w = float(input("Podaj t_w"))
-        t_l = float(input("Podaj t_l"))  
-        if h < 0 or w < 0 or l < 0 or t_h < 0 or t_w < 0 or t_l < 0 :
-            print("wartości przyjmują wartości ujemne :(, podaj wartości jeszcze raz")
-            continue
-    except ValueError:  
-        print("When I ask for a number, give me a number. Come on!")
-    else:
-        c.dimension_set('d3', float(h))
-        c.dimension_set('d4', float(w))
-        c.dimension_set('d6', float(l))
-        c.dimension_set('d17', float(t_h))
-        c.dimension_set('d8', float(t_w))
-        c.dimension_set('d18', float(t_l))
+# CONSTANTS
+creoPath = 'C:/Program Files/PTC/Creo 7.0.1.0/Parametric/bin/nitro_proe_remote.bat'
+fileName = 'kr_du_13k1.prt'
+worikngPath = 'D:/API/'
+H = 200     # HEIGHT MODEL
+W = 500     # WIDTH MODEL
+D = 45      # DEPTH MODEL
+T_H = 75    # HEIGHT TEXT
+T_D = 25    # DEPTH TEXT
+T_L = 15    # LEFT POSITION TEXT
 
-        d19 = (float(h)-float(t_h))/2
+# Clears the terminal screen, and displays a title bar.
+os.system('cls')
+
+def dimensionSet ():
+    userInput = input("Do you want to modify paramaters (y/n)? ")
+    if userInput == 'y':
+        H = float(input("Modify height model: "))
+        W = float(input("Modify width model: "))
+        D = float(input("Modify depth: "))
+        T_H = float(input("Modify height text: "))
+        T_D = float(input("Modify depth text: "))
+        T_L = float(input("Modify left position text: "))  
+        c.dimension_set('d3', float(H))
+        c.dimension_set('d6', float(W))
+        c.dimension_set('d4', float(D))
+        c.dimension_set('d17', float(T_H))
+        c.dimension_set('d8', float(T_D))
+        c.dimension_set('d18', float(T_L))
+        
+        d19 = (float(H)-float(T_H))/2
         c.dimension_set('d19', d19)
-
-        materials = c.file_list_materials()
-        counter = 0
-        for x in materials:
-            print(str(counter) + " - " + x)
-            counter = counter+1
-
-        material = int(input("Wybierz material(liczba):"))
-
-        c.file_set_cur_material(str(materials[material]))
-
-        text = str(input("wpisz tekst: "))
-        c.parameter_set("TEXT", text)
-
+        c.file_regenerate()  
+    elif userInput == 'n':
+        print('Create Model with starts paramaters')
+        H = 200     # HEIGHT MODEL
+        W = 500     # WIDTH MODEL
+        D = 45      # DEPTH MODEL
+        T_H = 75    # HEIGHT TEXT
+        T_D = 25    # DEPTH TEXT
+        T_L = 15    # LEFT POSITION TEXT
+        c.dimension_set('d3', float(H))
+        c.dimension_set('d6', float(W))
+        c.dimension_set('d4', float(D))
+        c.dimension_set('d17', float(T_H))
+        c.dimension_set('d8', float(T_D))
+        c.dimension_set('d18', float(T_L))
+        
+        d19 = (float(H)-float(T_H))/2
+        c.dimension_set('d19', d19)
         c.file_regenerate()
-        break
+    else:
+        print('Error: Wrong input, Use y or n! Try again')
+        dimensionSet()
+
+
+dimensionSet()
