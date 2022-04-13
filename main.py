@@ -20,14 +20,8 @@ def basicParameters():
     T_D = 25    # DEPTH TEXT
     T_L = 15    # LEFT POSITION TEXT
     Center = (float(H)-float(T_H))/2 #CENTER TEXT
-    c.dimension_set('d3', float(H))
-    c.dimension_set('d6', float(W))
-    c.dimension_set('d4', float(D))
-    c.dimension_set('d17', float(T_H))
-    c.dimension_set('d8', float(T_D))
-    c.dimension_set('d18', float(T_L))
-    c.dimension_set('d19', Center)
-    c.file_regenerate()  
+    return H, W, D, T_H, T_D, T_L, Center
+
 
 def userParameters():
     H = float(input("Modify height model: "))
@@ -37,14 +31,18 @@ def userParameters():
     T_D = float(input("Modify depth text: "))
     T_L = float(input("Modify left position text: ")) 
     Center = (float(H)-float(H))/2
-    c.dimension_set('d3', float(H))
-    c.dimension_set('d6', float(W))
-    c.dimension_set('d4', float(D))
-    c.dimension_set('d17', float(T_H))
-    c.dimension_set('d8', float(T_D))
-    c.dimension_set('d18', float(T_L))
-    c.dimension_set('d19', Center)
-    c.file_regenerate() 
+    return H, W, D, T_H, T_D, T_L, Center
+
+def creoDimension(Parameters):
+    c.dimension_set('d3', float(Parameters[0]))
+    c.dimension_set('d6', float(Parameters[1]))
+    c.dimension_set('d4', float(Parameters[2]))
+    c.dimension_set('d17', float(Parameters[3]))
+    c.dimension_set('d8', float(Parameters[4]))
+    c.dimension_set('d18', float(Parameters[5]))
+    c.dimension_set('d19', Parameters[6])
+    c.file_regenerate()  
+
 
 # Clears the terminal screen, and displays a title bar.
 os.system('cls')
@@ -52,12 +50,13 @@ os.system('cls')
 def dimensionSet():
     userInput = input("Do you want to modify paramaters (y/n)? ")
     if userInput == 'y':
-        userParameters()
+        creoDimension(userParameters())
     elif userInput == 'n':
         print('Create Model with starts paramaters')
-        basicParameters()
+        creoDimension(basicParameters())
     else:
         print('Error: Wrong input, Use y or n! Try again')
         dimensionSet()
 
 dimensionSet()
+
