@@ -1,3 +1,4 @@
+from mimetypes import init
 import creopyson
 import os
 
@@ -24,6 +25,7 @@ def basicParameters():
 
 
 def userParameters():
+        print("REMEMBER THAT PARAMETERS MUST BE GREATER THAN 0!")
         H = float(input("Modify height model: "))
         W = float(input("Modify width model: "))
         D = float(input("Modify depth: "))
@@ -31,7 +33,12 @@ def userParameters():
         T_D = float(input("Modify depth text: "))
         T_L = float(input("Modify left position text: ")) 
         Center = (float(H)-float(H))/2
-        return H, W, D, T_H, T_D, T_L, Center
+        if H < 0 or W < 0 or D < 0 or T_H < 0 or T_D < 0 or T_L < 0:
+            print("One of the parameters you specified is less than zero, correct it!")
+            userParameters()
+        else:
+            return H, W, D, T_H, T_D, T_L, Center
+
 
 def creoDimension(Parameters):
     c.dimension_set('d3', float(Parameters[0]))
@@ -44,10 +51,8 @@ def creoDimension(Parameters):
     c.file_regenerate()  
 
 
-# Clears the terminal screen, and displays a title bar.
-os.system('cls')
-
 def dimensionSet():
+    os.system('cls')
     userInput = input("Do you want to modify paramaters (y/n)? ")
     userInput
     if userInput == 'y':
@@ -59,8 +64,6 @@ def dimensionSet():
     else:
         print('Error: Wrong input, Use y or n! Try again')
         dimensionSet()
-
-dimensionSet()
 
 def chooseMaterial():
     os.system('cls')
@@ -74,13 +77,45 @@ def chooseMaterial():
 
     c.file_set_cur_material(str(materials[material]))
 
-
-chooseMaterial()
-
-
 def changeText():
+    os.system('cls')
     text = str(input("Write text: "))
     c.parameter_set("TEXT", text)
     c.file_regenerate()
 
-changeText()
+def authorApi():
+    print ("""
+                                    _                                               
+                        /\         (_)                                              
+   ___ _ __ ___  ___   /  \   _ __  _                                               
+  / __| '__/ _ \/ _ \ / /\ \ | '_ \| |                                              
+ | (__| | |  __/ (_) / ____ \| |_) | |                                              
+  \___|_|  \___|\___/_/    \_\ .__/|_|  _               _____        _   _          
+ | |           | |/ /        | |   | | (_)             |  __ \      | | | |         
+ | |__  _   _  | ' / _ __ _  |_|___| |_ _  __ _ _ __   | |  | |_   _| |_| | ____ _  
+ | '_ \| | | | |  < | '__| | | / __| __| |/ _` | '_ \  | |  | | | | | __| |/ / _` | 
+ | |_) | |_| | | . \| |  | |_| \__ \ |_| | (_| | | | | | |__| | |_| | |_|   < (_| | 
+ |_.__/ \__, | |_|\_\_|   \__, |___/\__|_|\__,_|_| |_| |_____/ \__,_|\__|_|\_\__,_| 
+         __/ |             __/ |                                                    
+        |___/             |___/                                                     
+"""
+)
+
+def userChoose():
+    print("[1] - Set working path")
+    print("[2] - Modify model paramaters & Modify text paramaters")
+    print("[3] - Modify text")
+    print("[4] - Change the models material")
+    print("[q] - Quit / exit the program")
+    return input("\nWhat would you like to do? ")
+
+def initCreoApi():
+    authorApi()
+    userChoose()
+    dimensionSet()
+    chooseMaterial()
+    changeText()
+    
+#Start programme CREOAPI
+
+initCreoApi()
