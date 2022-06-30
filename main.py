@@ -5,7 +5,7 @@ c = creopyson.Client()
 c.connect()
 c.creo_set_creo_version(7)
 c.creo_cd("D:\API")
-c.file_open("kr_du_13k1.prt")
+c.file_open("model.prt")
 c.view_activate("FRONT")
 
 # CONSTANTS
@@ -31,7 +31,7 @@ def userParameters():
         T_H = float(input("Modify height text: "))
         T_D = float(input("Modify depth text: "))
         T_L = float(input("Modify left position text: ")) 
-        Center = (float(H)-float(H))/2
+        Center = (float(H)-float(T_H))/2
         if H < 0 or W < 0 or D < 0 or T_H < 0 or T_D < 0 or T_L < 0:
             print("One of the parameters you specified is less than zero, correct it!")
             userParameters()
@@ -73,7 +73,7 @@ def chooseMaterial():
         counter = counter+1
 
     material = int(input("Select material(number): "))
-    if material > 0 and material < 11: 
+    if material > -1 and material < 11: 
         c.file_set_cur_material(str(materials[material]))
         os.system('cls')
         userChoose()
