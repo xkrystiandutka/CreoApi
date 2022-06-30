@@ -1,7 +1,8 @@
 # CAD API programming using Python. Automation of basic functions of 3D CAD systems.
 ## Prepare a part model in CREO Parametric 7.0 model system
 
-![model](https://user-images.githubusercontent.com/89588699/176651628-876c5c17-0bab-4212-afe1-f31eb9bb26f6.png)
+![image](https://user-images.githubusercontent.com/89588699/176653425-662d88f7-7ab0-4b5f-96e9-b7109d78b2ce.png)
+
 
 ## Execute an application in the Python environment that performs the following functions:
 - Changes the working directory.
