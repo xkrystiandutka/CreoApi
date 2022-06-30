@@ -14,4 +14,12 @@ Regeneration of models in CREO Parametric system after entering new data.
 
 # Terminal API 
 
-https://user-images.githubusercontent.com/89588699/176651803-1098ad0d-d6c6-45b8-8332-14bb9e371edd.mp4
+https://user-images.githubusercontent.com/89588699/176666215-ba42747c-47ec-4fd5-a03b-54513993520e.mp4
+
+# Installation
+
+Download the model and the code. Run main.py file.
+
+# License
+
+[MIT](LICENSE)
